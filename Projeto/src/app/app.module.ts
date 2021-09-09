@@ -12,6 +12,7 @@ import { Menu2Component } from './menu2/menu2.component';
 import { ModalPostComponent } from './modal-post/modal-post.component';
 import { FormsModule } from '@angular/forms';
 import { InicioComponent } from './inicio/inicio.component';
+import { TemaComponent } from './tema/tema.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { InicioComponent } from './inicio/inicio.component';
     CadastrarComponent,
     Menu2Component,
     ModalPostComponent,
-    InicioComponent
+    InicioComponent,
+    TemaComponent
   ],
   imports: [
     BrowserModule,
