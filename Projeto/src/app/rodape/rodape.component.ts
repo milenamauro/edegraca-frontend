@@ -1,31 +1,15 @@
-import { UsuarioLogin } from './../model/UsuarioLogin';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Usuario } from '../model/Usuario';
+import { Component, OnInit } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
+@Component({
+  selector: 'app-rodape',
+  templateUrl: './rodape.component.html',
+  styleUrls: ['./rodape.component.css']
 })
-export class AuthService {
+export class RodapeComponent implements OnInit {
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor() { }
 
-  logar(usuarioLogin: UsuarioLogin):Observable<UsuarioLogin>{
-    return this.http.post<UsuarioLogin>(
-      'https://edegracanubia.herokuapp.com/usuario/logar', usuarioLogin
-    )
+  ngOnInit(): void {
   }
-
-  cadastrar(usuario: Usuario): Observable<Usuario>{
-    return this.http.post<Usuario>(
-      'https://edegracanubia.herokuapp.com/usuario/cadastrar', usuario
-    )
-  }
-
-
-
 
 }

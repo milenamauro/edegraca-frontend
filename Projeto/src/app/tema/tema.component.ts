@@ -1,3 +1,6 @@
+import { AuthService } from './../service/auth.service';
+import { AlertsService } from './../service/alerts.service';
+import { Router } from '@angular/router';
 import { environment } from './../../environments/environment.prod';
 import { Tema } from './../model/Tema';
 import { TemaService } from './../service/tema.service';
@@ -19,22 +22,55 @@ export class TemaComponent implements OnInit {
   idTema: number
   idUser = environment.id
   listaPosts: Postagem[]
+  tituloPost: string
+  key = 'date'
+  reverse = true
+  email = environment.email
+  clickCurtir = false
+  totalCurtidas: number = 0
+
 
   constructor(
     private postService: PostsService,
-    private temaService: TemaService
+    private temaService: TemaService,
+    public authService: AuthService,
+    private router: Router,
+    private alert: AlertsService
   ) { }
+
   ngOnInit(){
+    window.scroll(0,0)
+    if(environment.token == ''){
+      this.router.navigate(['/login'])
+    }
+
+    if(environment.email == 'adm@edg.com'){
+      console.log("Você são desenvolvedores?")
+    }
+
+    if(this.clickCurtir == true){
+      console.log('O que fazer agora que já clicou?')
+    }
+
     this.getAllPosts()
     this.findAllTema()
   }
 
-  getAllPosts(){
+getAllPosts(){
   this.postService.getAllPosts().subscribe((resp: Postagem[]) => {
     this.listaPosts = resp
   })
 }
 
+findByTitulo(){
+  if(this.tituloPost == ''){
+    this.getAllPosts()
+  } else {
+    this.postService.getByTituloPost(this.tituloPost).subscribe((resp: Postagem[]) => {
+      this.listaPosts = resp
+    })
+  }
+}
 
 findAllTema(){
   this.temaService.getAllTema().subscribe((resp: Tema[]) => {
@@ -50,16 +86,30 @@ findByIdTema(){
 
 postar(){
   this.tema.id = this.idTema
-  this.postagem.theme = this.tema
+  this.postagem.tema = this.tema
 
   this.user.id = this.idUser
-  this.postagem.user = this.user
+  this.postagem.usuario = this.user
 
   this.postService.postPostagem(this.postagem).subscribe((resp: Postagem) => {
     this.postagem = resp
     this.getAllPosts()
-    alert('Postado')
+
+    this.alert.alertSuccess("Post feito com sucesso!")
+    this.router.navigate(['/tema'])
+
   })
 }
+
+curtidas(){
+  this.clickCurtir = true
+  this.postagem.curtir = this.totalCurtidas + 1
+
+  //post getByCurtidas
+  //getAll pra atualizar
+}
+
+
+
 
 }

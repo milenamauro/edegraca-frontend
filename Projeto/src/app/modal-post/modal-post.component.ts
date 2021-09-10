@@ -42,12 +42,13 @@ export class ModalPostComponent implements OnInit {
       this.tema = resp
     })
   }
-    postar(){
+
+  postar(){
     this.tema.id = this.idTema
-    this.postagem.theme = this.tema
+    this.postagem.tema = this.tema
 
     this.user.id = this.idUser
-    this.postagem.user = this.user
+    this.postagem.usuario = this.user
 
     this.postService.postPostagem(this.postagem).subscribe((resp: Postagem) => {
       this.postagem = resp
@@ -55,7 +56,8 @@ export class ModalPostComponent implements OnInit {
       alert('Postado')
     })
   }
-    getAllPosts(){
+
+  getAllPosts(){
     this.postService.getAllPosts().subscribe((resp: Postagem[]) => {
       this.listaPosts = resp
     })
